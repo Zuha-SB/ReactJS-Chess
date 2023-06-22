@@ -12,6 +12,20 @@ interface Piece {
 
 const pieces: Piece[] = [];
 
+for (let p = 0; p < 2; p++) {
+    const type = (p === 0) ? "b" : "w";
+    const y = (p === 0) ? 7 : 0;
+
+    pieces.push({ piece: `chess-pieces/rook_${type}.png`, x: 0, y })
+    pieces.push({ piece: `chess-pieces/rook_${type}.png`, x: 7, y })
+    pieces.push({ piece: `chess-pieces/knight_${type}.png`, x: 1, y })
+    pieces.push({ piece: `chess-pieces/knight_${type}.png`, x: 6, y })
+    pieces.push({ piece: `chess-pieces/bishop_${type}.png`, x: 2, y })
+    pieces.push({ piece: `chess-pieces/bishop_${type}.png`, x: 5, y })
+    pieces.push({ piece: `chess-pieces/queen_${type}.png`, x: 3, y })
+    pieces.push({ piece: `chess-pieces/king_${type}.png`, x: 4, y })
+}
+
 for(let i = 0; i < files.length; i++) {
     pieces.push({ piece: "chess-pieces/pawn_b.png", x: i, y: 6 })
 }
@@ -19,24 +33,6 @@ for(let i = 0; i < files.length; i++) {
 for(let i = 0; i < files.length; i++) {
     pieces.push({ piece: "chess-pieces/pawn_w.png", x: i, y: 1 })
 }
-
-pieces.push({ piece: "chess-pieces/rook_b.png", x: 0, y: 7})
-pieces.push({ piece: "chess-pieces/rook_b.png", x: 7, y: 7})
-pieces.push({ piece: "chess-pieces/knight_b.png", x: 1, y: 7})
-pieces.push({ piece: "chess-pieces/knight_b.png", x: 6, y: 7})
-pieces.push({ piece: "chess-pieces/bishop_b.png", x: 2, y: 7})
-pieces.push({ piece: "chess-pieces/bishop_b.png", x: 5, y: 7})
-pieces.push({ piece: "chess-pieces/queen_b.png", x: 3, y: 7})
-pieces.push({ piece: "chess-pieces/king_b.png", x: 4, y: 7})
-
-pieces.push({ piece: "chess-pieces/rook_w.png", x: 0, y: 0})
-pieces.push({ piece: "chess-pieces/rook_w.png", x: 7, y: 0})
-pieces.push({ piece: "chess-pieces/knight_w.png", x: 1, y: 0})
-pieces.push({ piece: "chess-pieces/knight_w.png", x: 6, y: 0})
-pieces.push({ piece: "chess-pieces/bishop_w.png", x: 2, y: 0})
-pieces.push({ piece: "chess-pieces/bishop_w.png", x: 5, y: 0})
-pieces.push({ piece: "chess-pieces/queen_w.png", x: 3, y: 0})
-pieces.push({ piece: "chess-pieces/king_w.png", x: 4, y: 0})
 
 export default function Chessboard() {
     let board = [];
