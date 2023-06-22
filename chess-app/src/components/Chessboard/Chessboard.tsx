@@ -47,7 +47,7 @@ export default function Chessboard() {
                 }
             })
 
-            board.push(<Tile piece={piece} number={sum}/>);
+            board.push(<Tile key={`${j},${i}`} piece={piece} number={sum}/>);
         }
     }
     return <div id="chessboard">{board}</div>
