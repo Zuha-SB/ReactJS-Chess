@@ -6,7 +6,7 @@ import Referee from '../../referee/Referee';
 const ranks = ["1", "2", "3", "4", "5", "6", "7", "8"];
 const files = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
-interface Piece {
+export interface Piece {
     piece: string;
     x: number;
     y: number;
@@ -116,7 +116,7 @@ export default function Chessboard() {
             setPieces((value) => {
                 const pieces = value.map((p) => {
                     if(p.x === gridX && p.y === gridY) {
-                        const validMove = referee.isValidMove(gridX, gridY, x, y, p.type, p.team);
+                        const validMove = referee.isValidMove(gridX, gridY, x, y, p.type, p.team, value);
 
                         if(validMove) {
                             p.x = x;
