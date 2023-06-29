@@ -134,21 +134,6 @@ export default function Chessboard() {
                     }, [] as Piece[]);
 
                     setPieces(updatedPieces);
-
-                    // setPieces((value) => {
-                    //     const pieces = value.reduce((results, piece) => {
-                    //         if(piece.x === currentPiece.x && piece.y === currentPiece.y) {
-                    //             piece.x = x;
-                    //             piece.y = y;
-                    //             results.push(piece);
-                    //         } else if(!(piece.x === x && piece.y === y)) {
-                    //             results.push(piece);
-                    //         }
-                    //         return results;
-                    //     }, [] as Piece[]);
-
-                    //     return pieces;
-                    // })
                 } else {
                     //Resets the piece position
                     activePiece.style.position = 'relative';
