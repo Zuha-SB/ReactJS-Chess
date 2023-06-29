@@ -123,7 +123,7 @@ export default function Chessboard() {
                     //And if a piece is attacked, removes it
 
                     const updatedPieces = pieces.reduce((results, piece) => {
-                        if(piece.x === currentPiece.x && piece.y === currentPiece.y) {
+                        if(piece.x === gridX && piece.y === gridY) {
                             piece.x = x;
                             piece.y = y;
                             results.push(piece);
