@@ -1,5 +1,7 @@
-export const ranks = ["1", "2", "3", "4", "5", "6", "7", "8"];
-export const files = ["a", "b", "c", "d", "e", "f", "g", "h"];
+export const RANKS = ["1", "2", "3", "4", "5", "6", "7", "8"];
+export const FILES = ["a", "b", "c", "d", "e", "f", "g", "h"];
+
+export const GRID_SIZE = 100;
 
 export interface Position {
     x: number;

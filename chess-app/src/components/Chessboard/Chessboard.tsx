@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import './Chessboard.css';
 import Tile from '../Tile/Tile';
 import Referee from '../../referee/Referee';
-import { ranks, files, Piece, PieceType, TeamType, initialBoardState, Position } from '../../Constants';
+import { RANKS, FILES, GRID_SIZE, Piece, PieceType, TeamType, initialBoardState, Position } from '../../Constants';
 
 export default function Chessboard() {
     const [activePiece, setActivePiece] = useState<HTMLElement | null>(null);
@@ -15,11 +15,11 @@ export default function Chessboard() {
         const element = e.target as HTMLElement;
         const chessboard = chessboardRef.current;
         if(element.classList.contains("chess-piece") && chessboard) {
-            const grabX = Math.floor((e.clientX - chessboard.offsetLeft) / 100);
-            const grabY = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 800) / 100));
+            const grabX = Math.floor((e.clientX - chessboard.offsetLeft) / GRID_SIZE);
+            const grabY = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 800) / GRID_SIZE));
             setGrabPosition({x: grabX, y: grabY});
-            const x = e.clientX - 50;
-            const y = e.clientY - 50;
+            const x = e.clientX - GRID_SIZE / 2;
+            const y = e.clientY - GRID_SIZE / 2;
             element.style.position = "absolute";
             element.style.left = `${x}px`;
             element.style.top = `${y}px`;
@@ -127,15 +127,11 @@ export default function Chessboard() {
     }
 
     let board = [];
-    for(let j = ranks.length-1; j >= 0; j--) {
-        for(let i = 0; i < files.length; i++) {
+    for(let j = RANKS.length-1; j >= 0; j--) {
+        for(let i = 0; i < FILES.length; i++) {
             const sum = j + i;
-            let piece = undefined;
-            pieces.forEach(p => {
-                if(p.position.x === i && p.position.y === j) {
-                    piece = p.piece;
-                }
-            })
+            const pieceID = pieces.find(p => p.position.x === i && p.position.y === j);
+            let piece = pieceID ? pieceID.piece : undefined;
             board.push(<Tile key={`${j},${i}`} piece={piece} number={sum}/>);
         }
     }
