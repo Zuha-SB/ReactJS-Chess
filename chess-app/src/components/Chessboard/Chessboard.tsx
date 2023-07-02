@@ -1,58 +1,8 @@
-import Tile from '../Tile/Tile';
-import './Chessboard.css';
 import { useRef, useState } from 'react';
+import './Chessboard.css';
+import Tile from '../Tile/Tile';
 import Referee from '../../referee/Referee';
-
-const ranks = ["1", "2", "3", "4", "5", "6", "7", "8"];
-const files = ["a", "b", "c", "d", "e", "f", "g", "h"];
-
-export interface Piece {
-    piece: string;
-    x: number;
-    y: number;
-    type: PieceType;
-    team: TeamType;
-    enPassant?: boolean;
-}
-
-export enum TeamType {
-    OPPONENT,
-    OUR
-}
-
-export enum PieceType {
-    PAWN,
-    BISHOP,
-    KNIGHT,
-    ROOK,
-    QUEEN,
-    KING
-}
-
-const initialBoardState: Piece[] = [];
-
-for (let p = 0; p < 2; p++) {
-    const teamType = (p === 0) ? TeamType.OPPONENT : TeamType.OUR;
-    const type = (teamType === TeamType.OPPONENT) ? "b" : "w";
-    const y = (teamType === TeamType.OPPONENT) ? 7 : 0;
-
-    initialBoardState.push({ piece: `chess-pieces/rook_${type}.png`, x: 0, y, type: PieceType.ROOK, team: teamType });
-    initialBoardState.push({ piece: `chess-pieces/rook_${type}.png`, x: 7, y, type: PieceType.ROOK, team: teamType });
-    initialBoardState.push({ piece: `chess-pieces/knight_${type}.png`, x: 1, y, type: PieceType.KNIGHT, team: teamType });
-    initialBoardState.push({ piece: `chess-pieces/knight_${type}.png`, x: 6, y, type: PieceType.KNIGHT, team: teamType });
-    initialBoardState.push({ piece: `chess-pieces/bishop_${type}.png`, x: 2, y, type: PieceType.BISHOP, team: teamType });
-    initialBoardState.push({ piece: `chess-pieces/bishop_${type}.png`, x: 5, y, type: PieceType.BISHOP, team: teamType });
-    initialBoardState.push({ piece: `chess-pieces/queen_${type}.png`, x: 3, y, type: PieceType.QUEEN, team: teamType });
-    initialBoardState.push({ piece: `chess-pieces/king_${type}.png`, x: 4, y, type: PieceType.KING, team: teamType });
-}
-
-for(let i = 0; i < files.length; i++) {
-    initialBoardState.push({ piece: "chess-pieces/pawn_b.png", x: i, y: 6, type: PieceType.PAWN, team: TeamType.OPPONENT });
-}
-
-for(let i = 0; i < files.length; i++) {
-    initialBoardState.push({ piece: "chess-pieces/pawn_w.png", x: i, y: 1, type: PieceType.PAWN, team: TeamType.OUR });
-}
+import { ranks, files, Piece, PieceType, TeamType, initialBoardState } from '../../Constants';
 
 export default function Chessboard() {
     const [activePiece, setActivePiece] = useState<HTMLElement | null>(null);
