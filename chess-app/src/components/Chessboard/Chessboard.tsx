@@ -60,8 +60,8 @@ export default function Chessboard() {
     function dropPiece(e: React.MouseEvent) {
         const chessboard = chessboardRef.current;
         if(activePiece && chessboard) {
-            const x = Math.floor((e.clientX - chessboard.offsetLeft) / 100);
-            const y = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 800) / 100));
+            const x = Math.floor((e.clientX - chessboard.offsetLeft) / GRID_SIZE);
+            const y = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 800) / GRID_SIZE));
 
             const currentPiece = pieces.find((p) => p.position.x === grabPosition.x && p.position.y === grabPosition.y);
             const attackedPiece = pieces.find((p) => p.position.x === x && p.position.y === y);
