@@ -64,7 +64,6 @@ export default function Chessboard() {
             const y = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 800) / GRID_SIZE));
 
             const currentPiece = pieces.find((p) => p.position.x === grabPosition.x && p.position.y === grabPosition.y);
-            const attackedPiece = pieces.find((p) => p.position.x === x && p.position.y === y);
 
             if(currentPiece) {
                 const validMove = referee.isValidMove(grabPosition.x, grabPosition.y, x, y, currentPiece.type, currentPiece.team, pieces);
