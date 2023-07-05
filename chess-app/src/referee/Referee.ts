@@ -95,45 +95,57 @@ export default class Referee {
                 //TOP RIGHT
                 if(desiredPosition.x > initialPosition.x && desiredPosition.y > initialPosition.y) {
                     let passedPosition: Position = {x: initialPosition.x + i, y: initialPosition.y + i};
-                    if(this.tileIsOccupied(passedPosition, boardState)) {
-                        break;
+                    if(passedPosition.x === desiredPosition.x && passedPosition.y === desiredPosition.y) {
+                        if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+                            return true;
+                        }
+                    } else {
+                        if(this.tileIsOccupied(passedPosition, boardState)) {
+                            break;
+                        }
                     }
-                }
-                if(desiredPosition.x - initialPosition.x === i && desiredPosition.y - initialPosition.y === i) {
-                    return true;
                 }
 
                 //BOTTOM RIGHT
                 if(desiredPosition.x > initialPosition.x && desiredPosition.y < initialPosition.y) {
                     let passedPosition: Position = {x: initialPosition.x + i, y: initialPosition.y - i};
-                    if(this.tileIsOccupied(passedPosition, boardState)) {
-                        break;
+                    if(passedPosition.x === desiredPosition.x && passedPosition.y === desiredPosition.y) {
+                        if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+                            return true;
+                        }
+                    } else {
+                        if(this.tileIsOccupied(passedPosition, boardState)) {
+                            break;
+                        }
                     }
-                }
-                if(desiredPosition.x - initialPosition.x === i && desiredPosition.y - initialPosition.y === -i) {
-                    return true;
                 }
 
                 //BOTTOM LEFT
                 if(desiredPosition.x < initialPosition.x && desiredPosition.y < initialPosition.y) {
                     let passedPosition: Position = {x: initialPosition.x - i, y: initialPosition.y - i};
-                    if(this.tileIsOccupied(passedPosition, boardState)) {
-                        break;
+                    if(passedPosition.x === desiredPosition.x && passedPosition.y === desiredPosition.y) {
+                        if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+                            return true;
+                        }
+                    } else {
+                        if(this.tileIsOccupied(passedPosition, boardState)) {
+                            break;
+                        }
                     }
-                }
-                if(desiredPosition.x - initialPosition.x === -i && desiredPosition.y - initialPosition.y === -i) {
-                    return true;
                 }
 
                 //TOP LEFT
                 if(desiredPosition.x < initialPosition.x && desiredPosition.y > initialPosition.y) {
                     let passedPosition: Position = {x: initialPosition.x - i, y: initialPosition.y + i};
-                    if(this.tileIsOccupied(passedPosition, boardState)) {
-                        break;
+                    if(passedPosition.x === desiredPosition.x && passedPosition.y === desiredPosition.y) {
+                        if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+                            return true;
+                        }
+                    } else {
+                        if(this.tileIsOccupied(passedPosition, boardState)) {
+                            break;
+                        }
                     }
-                }
-                if(desiredPosition.x - initialPosition.x === -i && desiredPosition.y - initialPosition.y === i) {
-                    return true;
                 }
             }
         }
