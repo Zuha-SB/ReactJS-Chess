@@ -14,8 +14,8 @@ export interface Position {
 
 export enum PieceType {
     PAWN,
-    BISHOP,
     KNIGHT,
+    BISHOP,
     ROOK,
     QUEEN,
     KING
