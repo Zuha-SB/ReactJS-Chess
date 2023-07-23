@@ -1,4 +1,5 @@
 import { Position, PieceType, TeamType, Piece, samePosition } from "../Constants";
+import { bishopMove } from "./rules/BishopRules";
 import { tileIsOccupied, tileIsOccupiedByOpponent, tileIsEmptyOrOccupiedByOpponent } from "./rules/GeneralRules";
 import { knightMove } from "./rules/KnightRules";
 import { pawnMove } from "./rules/PawnRules";
@@ -12,69 +13,6 @@ export default class Referee {
                 const piece = boardState.find((p) => p.position.x === desiredPosition.x && p.position.y === desiredPosition.y - pawnDirection && p.enPassant );
                 if(piece) {
                     return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    bishopMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean {
-        //MOVEMENT LOGIC
-        for(let i = 1; i < 8; i++) {
-
-            //TOP RIGHT
-            if(desiredPosition.x > initialPosition.x && desiredPosition.y > initialPosition.y) {
-                let passedPosition: Position = {x: initialPosition.x + i, y: initialPosition.y + i};
-                if(samePosition(passedPosition, desiredPosition)) {
-                    if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
-                        return true;
-                    }
-                } else {
-                    if(tileIsOccupied(passedPosition, boardState)) {
-                        break;
-                    }
-                }
-            }
-
-            //BOTTOM RIGHT
-            if(desiredPosition.x > initialPosition.x && desiredPosition.y < initialPosition.y) {
-                let passedPosition: Position = {x: initialPosition.x + i, y: initialPosition.y - i};
-                if(samePosition(passedPosition, desiredPosition)) {
-                    if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
-                        return true;
-                    }
-                } else {
-                    if(tileIsOccupied(passedPosition, boardState)) {
-                        break;
-                    }
-                }
-            }
-
-            //BOTTOM LEFT
-            if(desiredPosition.x < initialPosition.x && desiredPosition.y < initialPosition.y) {
-                let passedPosition: Position = {x: initialPosition.x - i, y: initialPosition.y - i};
-                if(samePosition(passedPosition, desiredPosition)) {
-                    if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
-                        return true;
-                    }
-                } else {
-                    if(tileIsOccupied(passedPosition, boardState)) {
-                        break;
-                    }
-                }
-            }
-
-            //TOP LEFT
-            if(desiredPosition.x < initialPosition.x && desiredPosition.y > initialPosition.y) {
-                let passedPosition: Position = {x: initialPosition.x - i, y: initialPosition.y + i};
-                if(samePosition(passedPosition, desiredPosition)) {
-                    if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
-                        return true;
-                    }
-                } else {
-                    if(tileIsOccupied(passedPosition, boardState)) {
-                        break;
-                    }
                 }
             }
         }
@@ -157,7 +95,7 @@ export default class Referee {
                 validMove = knightMove(initialPosition, desiredPosition, team, boardState);
                 break;
             case PieceType.BISHOP:
-                validMove = this.bishopMove(initialPosition, desiredPosition, team, boardState);
+                validMove = bishopMove(initialPosition, desiredPosition, team, boardState);
                 break;
             case PieceType.ROOK:
                 validMove = this.rookMove(initialPosition, desiredPosition, team, boardState);
