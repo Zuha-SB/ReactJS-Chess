@@ -1,6 +1,7 @@
 import { Position, PieceType, TeamType, Piece, samePosition } from "../Constants";
 import { bishopMove } from "./rules/BishopRules";
 import { tileIsOccupied, tileIsEmptyOrOccupiedByOpponent } from "./rules/GeneralRules";
+import { kingMove } from "./rules/KingRules";
 import { knightMove } from "./rules/KnightRules";
 import { pawnMove } from "./rules/PawnRules";
 import { queenMove } from "./rules/QueenRules";
@@ -16,19 +17,6 @@ export default class Referee {
                 if(piece) {
                     return true;
                 }
-            }
-        }
-        return false;
-    }
-    
-    kingMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean {   
-        let multiplierX = (desiredPosition.x < initialPosition.x) ? -1 : (desiredPosition.x > initialPosition.x) ? 1 : 0;
-        let multiplierY = (desiredPosition.y < initialPosition.y) ? -1 : (desiredPosition.y > initialPosition.y) ? 1 : 0;
-
-        let passedPosition: Position = {x: initialPosition.x + (multiplierX), y: initialPosition.y + (multiplierY)};
-        if(samePosition(passedPosition, desiredPosition)) {
-            if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
-                return true;
             }
         }
         return false;
@@ -53,7 +41,7 @@ export default class Referee {
                 validMove = queenMove(initialPosition, desiredPosition, team, boardState);
                 break;
             case PieceType.KING:
-                validMove = this.kingMove(initialPosition, desiredPosition, team, boardState);
+                validMove = kingMove(initialPosition, desiredPosition, team, boardState);
                 break;
         }
         return validMove;
