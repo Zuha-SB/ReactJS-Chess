@@ -34,3 +34,7 @@ export const rookMove = (initialPosition: Position, desiredPosition: Position, t
     }   
     return false;
 }
+
+export const getPossibleRookMoves = (piece: Piece, boardState: Piece[]) : Position[] => {
+    return [];
+}

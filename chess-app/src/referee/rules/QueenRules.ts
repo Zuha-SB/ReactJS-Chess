@@ -19,3 +19,7 @@ export const queenMove = (initialPosition: Position, desiredPosition: Position, 
     }
     return false;
 }
+
+export const getPossibleQueenMoves = (piece: Piece, boardState: Piece[]) : Position[] => {
+    return [];
+}

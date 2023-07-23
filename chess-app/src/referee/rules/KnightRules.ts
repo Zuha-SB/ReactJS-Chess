@@ -25,3 +25,7 @@ export const knightMove = (initialPosition: Position, desiredPosition: Position,
     }
     return false;
 }
+
+export const getPossibleKnightMoves = (piece: Piece, boardState: Piece[]) : Position[] => {
+    return [];
+}

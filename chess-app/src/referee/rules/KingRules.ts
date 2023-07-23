@@ -13,3 +13,7 @@ export const kingMove = (initialPosition: Position, desiredPosition: Position, t
     }
     return false;
 }
+
+export const getPossibleKingMoves = (piece: Piece, boardState: Piece[]) : Position[] => {
+    return [];
+}

@@ -63,3 +63,7 @@ export const bishopMove = (initialPosition: Position, desiredPosition: Position,
     }
     return false;
 }
+
+export const getPossibleBishopMoves = (piece: Piece, boardState: Piece[]) : Position[] => {
+    return [];
+}
