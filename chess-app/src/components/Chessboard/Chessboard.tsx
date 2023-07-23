@@ -6,6 +6,7 @@ import { RANKS, FILES, GRID_SIZE, Piece, PieceType, TeamType, initialBoardState,
 
 export default function Chessboard() {
     const [activePiece, setActivePiece] = useState<HTMLElement | null>(null);
+    const [promotionPawn, setPromotionPawn] = useState<Piece>();
     const [grabPosition, setGrabPosition] = useState<Position>({ x: -1, y: -1 });
     const [pieces, setPieces] = useState<Piece[]>(initialBoardState);
     const chessboardRef = useRef<HTMLDivElement>(null);
@@ -101,7 +102,7 @@ export default function Chessboard() {
 
                             let promotionRow = (piece.team === TeamType.OUR) ? 7 : 0;
                             if(y === promotionRow) {
-                                //promote
+                                setPromotionPawn(currentPiece);
                             }
 
                             results.push(piece);
@@ -126,6 +127,10 @@ export default function Chessboard() {
         }
     }
 
+    function promotePawn(pieceType: PieceType) {
+        //promote
+    }
+
     let board = [];
     for(let j = RANKS.length-1; j >= 0; j--) {
         for(let i = 0; i < FILES.length; i++) {
@@ -138,10 +143,10 @@ export default function Chessboard() {
     return (
         <>
             <div id="pawn-promotion-modal">
-                <img src="/chess-pieces/knight_w.png"/>
-                <img src="/chess-pieces/bishop_w.png"/>
-                <img src="/chess-pieces/rook_w.png"/>
-                <img src="/chess-pieces/queen_w.png"/>
+                <img onClick={() => promotePawn(PieceType.KNIGHT)} src="/chess-pieces/knight_w.png"/>
+                <img onClick={() => promotePawn(PieceType.BISHOP)} src="/chess-pieces/bishop_w.png"/>
+                <img onClick={() => promotePawn(PieceType.ROOK)} src="/chess-pieces/rook_w.png"/>
+                <img onClick={() => promotePawn(PieceType.QUEEN)} src="/chess-pieces/queen_w.png"/>
             </div>
             <div 
                 onMouseMove={(e) => movePiece(e)} 
