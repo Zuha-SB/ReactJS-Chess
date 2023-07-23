@@ -144,9 +144,9 @@ export default function Chessboard() {
         <>
             <div id="pawn-promotion-modal">
                 <img onClick={() => promotePawn(PieceType.KNIGHT)} src="./chess-pieces/knight_w.png"/>
-                <img onClick={() => promotePawn(PieceType.BISHOP)} src="/chess-pieces/bishop_w.png"/>
-                <img onClick={() => promotePawn(PieceType.ROOK)} src="/chess-pieces/rook_w.png"/>
-                <img onClick={() => promotePawn(PieceType.QUEEN)} src="/chess-pieces/queen_w.png"/>
+                <img onClick={() => promotePawn(PieceType.BISHOP)} src="./chess-pieces/bishop_w.png"/>
+                <img onClick={() => promotePawn(PieceType.ROOK)} src="./chess-pieces/rook_w.png"/>
+                <img onClick={() => promotePawn(PieceType.QUEEN)} src="./chess-pieces/queen_w.png"/>
             </div>
             <div 
                 onMouseMove={(e) => movePiece(e)} 
