@@ -5,3 +5,26 @@
     width: 800px;
     height: 800px;
 }
+
+#pawn-promotion-modal {
+    position: absolute;
+    top: calc(50% - 150px);
+    left: calc(50% - 400px);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 300px;
+    width: 800px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+#pawn-promotion-modal > img {
+    height: 120px;
+    padding: 20px;
+    border-radius: 50%;
+}
+
+#pawn-promotion-modal >img:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+}

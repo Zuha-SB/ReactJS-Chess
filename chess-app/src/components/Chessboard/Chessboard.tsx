@@ -98,6 +98,12 @@ export default function Chessboard() {
                             piece.enPassant = Math.abs(grabPosition.y - y) === 2 && piece.type === PieceType.PAWN;
                             piece.position.x = x;
                             piece.position.y = y;
+
+                            let promotionRow = (piece.team === TeamType.OUR) ? 7 : 0;
+                            if(y === promotionRow) {
+                                //promote
+                            }
+
                             results.push(piece);
                         } else if(!(samePosition(piece.position, { x, y }))) {
                             if(piece.type === PieceType.PAWN) {
@@ -130,14 +136,22 @@ export default function Chessboard() {
         }
     }
     return (
-        <div 
-            onMouseMove={(e) => movePiece(e)} 
-            onMouseDown={(e) => grabPiece(e)} 
-            onMouseUp={(e) => dropPiece(e)}
-            id="chessboard"
-            ref={chessboardRef}
-        >
-            {board}
-        </div>
+        <>
+            <div id="pawn-promotion-modal">
+                <img src="/chess-pieces/knight_w.png"/>
+                <img src="/chess-pieces/bishop_w.png"/>
+                <img src="/chess-pieces/rook_w.png"/>
+                <img src="/chess-pieces/queen_w.png"/>
+            </div>
+            <div 
+                onMouseMove={(e) => movePiece(e)} 
+                onMouseDown={(e) => grabPiece(e)} 
+                onMouseUp={(e) => dropPiece(e)}
+                id="chessboard"
+                ref={chessboardRef}
+            >
+                {board}
+            </div>
+        </>
     );
 }
