@@ -1,12 +1,9 @@
 import { Position, PieceType, TeamType, Piece, samePosition } from "../Constants";
-import { tileIsOccupied, tileIsOccupiedByOpponent } from "./rules/GeneralRules";
+import { tileIsOccupied, tileIsOccupiedByOpponent, tileIsEmptyOrOccupiedByOpponent } from "./rules/GeneralRules";
+import { knightMove } from "./rules/KnightRules";
 import { pawnMove } from "./rules/PawnRules";
 
 export default class Referee {
-    tileIsEmptyOrOccupiedByOpponent(position: Position, boardState: Piece[], team: TeamType): boolean {
-        return !tileIsOccupied(position, boardState) || tileIsOccupiedByOpponent(position, boardState, team);
-    }
-
     isEnPassantMove(initialPosition: Position, desiredPosition: Position, type: PieceType,team: TeamType, boardState: Piece[]) {
         const pawnDirection = team === TeamType.OUR ? 1 : -1;
 
@@ -21,31 +18,6 @@ export default class Referee {
         return false;
     }
 
-    knightMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean {
-        //MOVING LOGIC FOR THE KNIGHT
-        for(let i = -1; i < 2; i+=2) {
-            for(let j = -1; j < 2; j+=2) {
-                //TOP AND BOTTOM SIDE MOVEMENT
-                if(desiredPosition.y - initialPosition.y === 2 * i) {
-                    if(desiredPosition.x - initialPosition.x === j) {
-                        if(this.tileIsEmptyOrOccupiedByOpponent(desiredPosition, boardState, team)) {
-                            return true;
-                        }
-                    }
-                }
-                //RIGHT AND LEFT SIDE MOVEMENT
-                if(desiredPosition.x - initialPosition.x === 2 * i) {
-                    if(desiredPosition.y - initialPosition.y === j) {
-                        if(this.tileIsEmptyOrOccupiedByOpponent(desiredPosition, boardState, team)) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     bishopMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean {
         //MOVEMENT LOGIC
         for(let i = 1; i < 8; i++) {
@@ -54,7 +26,7 @@ export default class Referee {
             if(desiredPosition.x > initialPosition.x && desiredPosition.y > initialPosition.y) {
                 let passedPosition: Position = {x: initialPosition.x + i, y: initialPosition.y + i};
                 if(samePosition(passedPosition, desiredPosition)) {
-                    if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+                    if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
                         return true;
                     }
                 } else {
@@ -68,7 +40,7 @@ export default class Referee {
             if(desiredPosition.x > initialPosition.x && desiredPosition.y < initialPosition.y) {
                 let passedPosition: Position = {x: initialPosition.x + i, y: initialPosition.y - i};
                 if(samePosition(passedPosition, desiredPosition)) {
-                    if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+                    if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
                         return true;
                     }
                 } else {
@@ -82,7 +54,7 @@ export default class Referee {
             if(desiredPosition.x < initialPosition.x && desiredPosition.y < initialPosition.y) {
                 let passedPosition: Position = {x: initialPosition.x - i, y: initialPosition.y - i};
                 if(samePosition(passedPosition, desiredPosition)) {
-                    if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+                    if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
                         return true;
                     }
                 } else {
@@ -96,7 +68,7 @@ export default class Referee {
             if(desiredPosition.x < initialPosition.x && desiredPosition.y > initialPosition.y) {
                 let passedPosition: Position = {x: initialPosition.x - i, y: initialPosition.y + i};
                 if(samePosition(passedPosition, desiredPosition)) {
-                    if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+                    if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
                         return true;
                     }
                 } else {
@@ -115,7 +87,7 @@ export default class Referee {
                 let multiplier = (desiredPosition.y < initialPosition.y) ? -1 : 1;
                 let passedPosition: Position = {x: initialPosition.x, y: initialPosition.y + (i*multiplier)};
                 if(samePosition(passedPosition, desiredPosition)) {
-                    if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+                    if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
                         return true;
                     }
                 } else {
@@ -130,7 +102,7 @@ export default class Referee {
                 let multiplier = (desiredPosition.x < initialPosition.x) ? -1 : 1;
                 let passedPosition: Position = {x: initialPosition.x + (i*multiplier), y: initialPosition.y};
                 if(samePosition(passedPosition, desiredPosition)) {
-                    if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+                    if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
                         return true;
                     }
                 } else {
@@ -150,7 +122,7 @@ export default class Referee {
 
             let passedPosition: Position = {x: initialPosition.x + (i * multiplierX), y: initialPosition.y + (i * multiplierY)};
             if(samePosition(passedPosition, desiredPosition)) {
-                if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+                if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
                     return true;
                 }
             } else {
@@ -168,7 +140,7 @@ export default class Referee {
 
         let passedPosition: Position = {x: initialPosition.x + (multiplierX), y: initialPosition.y + (multiplierY)};
         if(samePosition(passedPosition, desiredPosition)) {
-            if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+            if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
                 return true;
             }
         }
@@ -182,7 +154,7 @@ export default class Referee {
                 validMove = pawnMove(initialPosition, desiredPosition, team, boardState);
                 break;
             case PieceType.KNIGHT:
-                validMove = this.knightMove(initialPosition, desiredPosition, team, boardState);
+                validMove = knightMove(initialPosition, desiredPosition, team, boardState);
                 break;
             case PieceType.BISHOP:
                 validMove = this.bishopMove(initialPosition, desiredPosition, team, boardState);
