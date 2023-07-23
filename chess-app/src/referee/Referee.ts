@@ -3,6 +3,7 @@ import { bishopMove } from "./rules/BishopRules";
 import { tileIsOccupied, tileIsEmptyOrOccupiedByOpponent } from "./rules/GeneralRules";
 import { knightMove } from "./rules/KnightRules";
 import { pawnMove } from "./rules/PawnRules";
+import { queenMove } from "./rules/QueenRules";
 import { rookMove } from "./rules/RookRules";
 
 export default class Referee {
@@ -14,25 +15,6 @@ export default class Referee {
                 const piece = boardState.find((p) => p.position.x === desiredPosition.x && p.position.y === desiredPosition.y - pawnDirection && p.enPassant );
                 if(piece) {
                     return true;
-                }
-            }
-        }
-        return false;
-    }
-    
-    queenMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean {
-        for(let i = 1; i < 8; i++) {
-            let multiplierX = (desiredPosition.x < initialPosition.x) ? -1 : (desiredPosition.x > initialPosition.x) ? 1 : 0;
-            let multiplierY = (desiredPosition.y < initialPosition.y) ? -1 : (desiredPosition.y > initialPosition.y) ? 1 : 0;
-
-            let passedPosition: Position = {x: initialPosition.x + (i * multiplierX), y: initialPosition.y + (i * multiplierY)};
-            if(samePosition(passedPosition, desiredPosition)) {
-                if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
-                    return true;
-                }
-            } else {
-                if(tileIsOccupied(passedPosition, boardState)) {
-                    break;
                 }
             }
         }
@@ -68,7 +50,7 @@ export default class Referee {
                 validMove = rookMove(initialPosition, desiredPosition, team, boardState);
                 break;
             case PieceType.QUEEN:
-                validMove = this.queenMove(initialPosition, desiredPosition, team, boardState);
+                validMove = queenMove(initialPosition, desiredPosition, team, boardState);
                 break;
             case PieceType.KING:
                 validMove = this.kingMove(initialPosition, desiredPosition, team, boardState);
