@@ -1,6 +1,5 @@
-import { Position, PieceType, TeamType, Piece, samePosition } from "../Constants";
+import { Position, PieceType, TeamType, Piece } from "../Constants";
 import { bishopMove } from "./rules/BishopRules";
-import { tileIsOccupied, tileIsEmptyOrOccupiedByOpponent } from "./rules/GeneralRules";
 import { kingMove } from "./rules/KingRules";
 import { knightMove } from "./rules/KnightRules";
 import { pawnMove } from "./rules/PawnRules";
