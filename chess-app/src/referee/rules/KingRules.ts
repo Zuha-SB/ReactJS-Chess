@@ -14,6 +14,15 @@ export const kingMove = (initialPosition: Position, desiredPosition: Position, t
     return false;
 }
 
-export const getPossibleKingMoves = (piece: Piece, boardState: Piece[]) : Position[] => {
-    return [];
+export const getPossibleKingMoves = (king: Piece, boardState: Piece[]) : Position[] => {
+    const possibleMoves: Position[] = [];
+    for(let i = -1; i < 2; i++) {
+        for(let j = -1; j < 2; j++) {
+            let passedPosition: Position = {x: king.position.x + i, y: king.position.y + j};
+            if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, king.team)) {
+                possibleMoves.push(passedPosition);
+            }
+        }
+    }
+    return possibleMoves;
 }
