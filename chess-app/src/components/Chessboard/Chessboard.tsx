@@ -13,7 +13,17 @@ export default function Chessboard() {
     const modalRef = useRef<HTMLDivElement>(null);
     const referee = new Referee();
 
+    function updateValidMoves() {
+        setPieces((currentPieces) => {
+            return currentPieces.map(p => {
+                p.possibleMoves = referee.getValidMoves(p, currentPieces);
+                return p;
+            });
+        });
+    }
+
     function grabPiece(e: React.MouseEvent) {
+        updateValidMoves();
         const element = e.target as HTMLElement;
         const chessboard = chessboardRef.current;
         if(element.classList.contains("chess-piece") && chessboard) {
@@ -175,7 +185,13 @@ export default function Chessboard() {
             const sum = j + i;
             const pieceID = pieces.find(p => samePosition(p.position, { x: i, y: j }));
             let piece = pieceID ? pieceID.piece : undefined;
-            board.push(<Tile key={`${j},${i}`} piece={piece} number={sum}/>);
+
+            // Use this line instead if you want possible moves dots to remain after letting go of the piece: 
+            // let currentPiece = pieces.find(p => samePosition(p.position, grabPosition));
+            let currentPiece = activePiece != null ? pieces.find(p => samePosition(p.position, grabPosition)) : undefined;
+            let highlight = currentPiece?.possibleMoves ? currentPiece.possibleMoves.some(p => samePosition(p, {x: i, y: j})) : false;
+
+            board.push(<Tile key={`${j},${i}`} piece={piece} number={sum} highlight={highlight}/>);
         }
     }
     return (
