@@ -1,23 +1,10 @@
+import { PieceType, TeamType } from "./Types";
 import { Position, Piece } from "./models";
 
 export const RANKS = ["1", "2", "3", "4", "5", "6", "7", "8"];
 export const FILES = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
 export const GRID_SIZE = 100;
-
-export enum PieceType {
-    PAWN = 'pawn',
-    KNIGHT = 'knight',
-    BISHOP = 'bishop',
-    ROOK = 'rook',
-    QUEEN = 'queen',
-    KING = 'king'
-}
-
-export enum TeamType {
-    OPPONENT = 'b',
-    OUR = 'w'
-}
 
 export const initialBoardState: Piece[] = [
 

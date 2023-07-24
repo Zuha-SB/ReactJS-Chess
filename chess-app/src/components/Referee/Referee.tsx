@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { PieceType, TeamType, initialBoardState } from "../../Constants";
+import { initialBoardState } from "../../Constants";
 import Chessboard from "../Chessboard/Chessboard";
 import { getPossiblePawnMoves, getPossibleKnightMoves, getPossibleBishopMoves, getPossibleRookMoves, getPossibleQueenMoves, getPossibleKingMoves, bishopMove, kingMove, knightMove, pawnMove, queenMove, rookMove } from "../../rules";
 import { Piece, Position } from "../../models";
+import { TeamType, PieceType } from "../../Types";
 
 export default function Referee() {
 

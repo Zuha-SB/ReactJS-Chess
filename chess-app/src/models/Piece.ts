@@ -1,5 +1,5 @@
 import { Position } from ".";
-import { PieceType, TeamType } from "../Constants";
+import { PieceType, TeamType } from "../Types";
 
 export class Piece {
     image: string;
