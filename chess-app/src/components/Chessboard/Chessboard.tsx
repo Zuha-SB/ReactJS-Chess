@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import './Chessboard.css';
 import Tile from '../Tile/Tile';
-import { RANKS, FILES, GRID_SIZE, Piece, PieceType, TeamType, initialBoardState, Position, samePosition } from '../../Constants';
+import { RANKS, FILES, GRID_SIZE, Piece, Position, samePosition } from '../../Constants';
 
 interface Props {
     updatePossibleMoves: () => void;
