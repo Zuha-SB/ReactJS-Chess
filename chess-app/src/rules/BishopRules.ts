@@ -1,4 +1,4 @@
-import { TeamType, samePosition } from "../Constants";
+import { TeamType } from "../Constants";
 import { Position, Piece } from "../models";
 import { tileIsEmptyOrOccupiedByOpponent, tileIsOccupied, tileIsOccupiedByOpponent } from "./GeneralRules";
 
@@ -9,7 +9,7 @@ export const bishopMove = (initialPosition: Position, desiredPosition: Position,
         //TOP RIGHT
         if(desiredPosition.x > initialPosition.x && desiredPosition.y > initialPosition.y) {
             let passedPosition = new Position(initialPosition.x + i, initialPosition.y + i);
-            if(samePosition(passedPosition, desiredPosition)) {
+            if(passedPosition.samePosition(desiredPosition)) {
                 if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
                     return true;
                 }
@@ -23,7 +23,7 @@ export const bishopMove = (initialPosition: Position, desiredPosition: Position,
         //BOTTOM RIGHT
         if(desiredPosition.x > initialPosition.x && desiredPosition.y < initialPosition.y) {
             let passedPosition = new Position(initialPosition.x + i, initialPosition.y - i);
-            if(samePosition(passedPosition, desiredPosition)) {
+            if(passedPosition.samePosition(desiredPosition)) {
                 if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
                     return true;
                 }
@@ -37,7 +37,7 @@ export const bishopMove = (initialPosition: Position, desiredPosition: Position,
         //BOTTOM LEFT
         if(desiredPosition.x < initialPosition.x && desiredPosition.y < initialPosition.y) {
             let passedPosition = new Position(initialPosition.x - i, initialPosition.y - i);
-            if(samePosition(passedPosition, desiredPosition)) {
+            if(passedPosition.samePosition(desiredPosition)) {
                 if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
                     return true;
                 }
@@ -51,7 +51,7 @@ export const bishopMove = (initialPosition: Position, desiredPosition: Position,
         //TOP LEFT
         if(desiredPosition.x < initialPosition.x && desiredPosition.y > initialPosition.y) {
             let passedPosition = new Position(initialPosition.x - i, initialPosition.y + i);
-            if(samePosition(passedPosition, desiredPosition)) {
+            if(passedPosition.samePosition(desiredPosition)) {
                 if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
                     return true;
                 }
