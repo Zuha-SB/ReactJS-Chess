@@ -6,7 +6,6 @@ export class Piece {
     position: Position;
     type: PieceType;
     team: TeamType;
-    enPassant?: boolean;
     possibleMoves?: Position[];
     
     constructor(position: Position, type: PieceType, team: TeamType) {
@@ -16,27 +15,27 @@ export class Piece {
         this.team = team;
     }
 
-    isPawn() : boolean {
+    get isPawn() : boolean {
         return this.type === PieceType.PAWN;
     }
 
-    isKnight() : boolean {
+    get Knight() : boolean {
         return this.type === PieceType.KNIGHT;
     }
 
-    isBishop() : boolean {
+    get isBishop() : boolean {
         return this.type === PieceType.BISHOP;
     }
 
-    isRook() : boolean {
+    get isRook() : boolean {
         return this.type === PieceType.ROOK;
     }
 
-    isQueen() : boolean {
+    get isQueen() : boolean {
         return this.type === PieceType.QUEEN;
     }
 
-    isKing() : boolean {
+    get isKing() : boolean {
         return this.type === PieceType.KING;
     }
 
