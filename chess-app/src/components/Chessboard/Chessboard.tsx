@@ -4,12 +4,11 @@ import Tile from '../Tile/Tile';
 import { RANKS, FILES, GRID_SIZE, Piece, Position, samePosition } from '../../Constants';
 
 interface Props {
-    updatePossibleMoves: () => void;
     playMove: (piece: Piece, destination: Position) => boolean;
     pieces: Piece[];
 }
 
-export default function Chessboard({updatePossibleMoves, playMove, pieces} : Props) {
+export default function Chessboard({playMove, pieces} : Props) {
     const [activePiece, setActivePiece] = useState<HTMLElement | null>(null);
     const [grabPosition, setGrabPosition] = useState<Position>({ x: -1, y: -1 });
     const chessboardRef = useRef<HTMLDivElement>(null);

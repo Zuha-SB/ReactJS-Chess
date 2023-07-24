@@ -187,7 +187,7 @@ export default function Referee() {
                 <img onClick={() => promotePawn(PieceType.QUEEN)} src={`./chess-pieces/queen_${promotionTeamType()}.png`}/>
             </div>
         </div>
-        <Chessboard updatePossibleMoves={updatePossibleMoves} playMove={playMove} pieces={pieces}/>
+        <Chessboard playMove={playMove} pieces={pieces}/>
     </>
     )
 }
