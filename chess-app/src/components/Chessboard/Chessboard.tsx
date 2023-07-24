@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import './Chessboard.css';
 import Tile from '../Tile/Tile';
-import { RANKS, FILES, GRID_SIZE, Position, samePosition } from '../../Constants';
-import { Piece } from '../../models/Piece';
+import { RANKS, FILES, GRID_SIZE, samePosition } from '../../Constants';
+import { Piece, Position } from '../../models';
 
 interface Props {
     playMove: (piece: Piece, destination: Position) => boolean;
