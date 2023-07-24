@@ -8,7 +8,7 @@ export const bishopMove = (initialPosition: Position, desiredPosition: Position,
 
         //TOP RIGHT
         if(desiredPosition.x > initialPosition.x && desiredPosition.y > initialPosition.y) {
-            let passedPosition: Position = {x: initialPosition.x + i, y: initialPosition.y + i};
+            let passedPosition = new Position(initialPosition.x + i, initialPosition.y + i);
             if(samePosition(passedPosition, desiredPosition)) {
                 if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
                     return true;
@@ -22,7 +22,7 @@ export const bishopMove = (initialPosition: Position, desiredPosition: Position,
 
         //BOTTOM RIGHT
         if(desiredPosition.x > initialPosition.x && desiredPosition.y < initialPosition.y) {
-            let passedPosition: Position = {x: initialPosition.x + i, y: initialPosition.y - i};
+            let passedPosition = new Position(initialPosition.x + i, initialPosition.y - i);
             if(samePosition(passedPosition, desiredPosition)) {
                 if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
                     return true;
@@ -36,7 +36,7 @@ export const bishopMove = (initialPosition: Position, desiredPosition: Position,
 
         //BOTTOM LEFT
         if(desiredPosition.x < initialPosition.x && desiredPosition.y < initialPosition.y) {
-            let passedPosition: Position = {x: initialPosition.x - i, y: initialPosition.y - i};
+            let passedPosition = new Position(initialPosition.x - i, initialPosition.y - i);
             if(samePosition(passedPosition, desiredPosition)) {
                 if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
                     return true;
@@ -50,7 +50,7 @@ export const bishopMove = (initialPosition: Position, desiredPosition: Position,
 
         //TOP LEFT
         if(desiredPosition.x < initialPosition.x && desiredPosition.y > initialPosition.y) {
-            let passedPosition: Position = {x: initialPosition.x - i, y: initialPosition.y + i};
+            let passedPosition = new Position(initialPosition.x - i, initialPosition.y + i);
             if(samePosition(passedPosition, desiredPosition)) {
                 if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
                     return true;
@@ -70,7 +70,7 @@ export const getPossibleBishopMoves = (bishop: Piece, boardState: Piece[]) : Pos
 
     //Upper right movement
     for(let i = 1; i < 8; i++) {
-        const destination: Position = {x: bishop.position.x + i, y: bishop.position.y + i};
+        const destination = new Position(bishop.position.x + i, bishop.position.y + i);
 
         if(!tileIsOccupied(destination, boardState)) {
             possibleMoves.push(destination);
@@ -84,7 +84,7 @@ export const getPossibleBishopMoves = (bishop: Piece, boardState: Piece[]) : Pos
 
     //Upper left movement
     for(let i = 1; i < 8; i++) {
-        const destination: Position = {x: bishop.position.x - i, y: bishop.position.y + i};
+        const destination = new Position(bishop.position.x - i, bishop.position.y + i);
 
         if(!tileIsOccupied(destination, boardState)) {
             possibleMoves.push(destination);
@@ -98,7 +98,7 @@ export const getPossibleBishopMoves = (bishop: Piece, boardState: Piece[]) : Pos
 
     //Bottom right movement
     for(let i = 1; i < 8; i++) {
-        const destination: Position = {x: bishop.position.x + i, y: bishop.position.y - i};
+        const destination = new Position(bishop.position.x + i, bishop.position.y - i);
 
         if(!tileIsOccupied(destination, boardState)) {
             possibleMoves.push(destination);
@@ -112,7 +112,7 @@ export const getPossibleBishopMoves = (bishop: Piece, boardState: Piece[]) : Pos
 
     //Bottom left movement
     for(let i = 1; i < 8; i++) {
-        const destination: Position = {x: bishop.position.x - i, y: bishop.position.y - i};
+        const destination = new Position(bishop.position.x - i, bishop.position.y - i);
 
         if(!tileIsOccupied(destination, boardState)) {
             possibleMoves.push(destination);

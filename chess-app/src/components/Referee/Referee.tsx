@@ -37,7 +37,7 @@ export default function Referee() {
                     piece.position.x = destination.x;
                     piece.position.y = destination.y;
                     results.push(piece);
-                } else if(!(samePosition(piece.position, { x: destination.x, y: destination.y - pawnDirection }))) {
+                } else if(!(samePosition(piece.position, new Position(destination.x, destination.y - pawnDirection)))) {
                     if(piece.type === PieceType.PAWN) {
                         piece.enPassant = false;
                     }
