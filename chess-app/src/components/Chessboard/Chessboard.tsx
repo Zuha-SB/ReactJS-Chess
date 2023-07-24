@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
 import './Chessboard.css';
 import Tile from '../Tile/Tile';
-import { RANKS, FILES, GRID_SIZE, Piece, Position, samePosition } from '../../Constants';
+import { RANKS, FILES, GRID_SIZE, Position, samePosition } from '../../Constants';
+import { Piece } from '../../models/Piece';
 
 interface Props {
     playMove: (piece: Piece, destination: Position) => boolean;
@@ -85,7 +86,7 @@ export default function Chessboard({playMove, pieces} : Props) {
         for(let i = 0; i < FILES.length; i++) {
             const sum = j + i;
             const pieceID = pieces.find(p => samePosition(p.position, { x: i, y: j }));
-            let piece = pieceID ? pieceID.piece : undefined;
+            let piece = pieceID ? pieceID.image : undefined;
 
             // Use this line instead if you want possible moves dots to remain after letting go of the piece: 
             // let currentPiece = pieces.find(p => samePosition(p.position, grabPosition));

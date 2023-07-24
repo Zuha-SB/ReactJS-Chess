@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { Piece, PieceType, Position, TeamType, initialBoardState, samePosition } from "../../Constants";
+import { PieceType, Position, TeamType, initialBoardState, samePosition } from "../../Constants";
 import Chessboard from "../Chessboard/Chessboard";
-import { getPossiblePawnMoves, getPossibleKnightMoves, getPossibleBishopMoves, getPossibleRookMoves, getPossibleQueenMoves, getPossibleKingMoves, bishopMove, kingMove, knightMove, pawnMove, queenMove, rookMove } from "../../referee/rules";
+import { getPossiblePawnMoves, getPossibleKnightMoves, getPossibleBishopMoves, getPossibleRookMoves, getPossibleQueenMoves, getPossibleKingMoves, bishopMove, kingMove, knightMove, pawnMove, queenMove, rookMove } from "../../rules";
+import { Piece } from "../../models/Piece";
 
 export default function Referee() {
 
@@ -161,7 +162,7 @@ export default function Referee() {
                         image = "queen";
                         break;
                 }
-                piece.piece = `./chess-pieces/${image}_${teamType}.png`;
+                piece.image = `./chess-pieces/${image}_${teamType}.png`;
             }
             results.push(piece);
 

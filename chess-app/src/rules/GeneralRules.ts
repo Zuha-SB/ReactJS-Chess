@@ -1,4 +1,5 @@
-import { Piece, Position, TeamType, samePosition } from "../../Constants";
+import { Position, TeamType, samePosition } from "../Constants";
+import { Piece } from "../models/Piece";
 
 export const tileIsOccupied = (position: Position, boardState: Piece[]): boolean => {
     const piece = boardState.find((p) => samePosition(p.position, position));

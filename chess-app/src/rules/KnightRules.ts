@@ -1,4 +1,5 @@
-import { Position, TeamType, Piece } from "../../Constants";
+import { Position, TeamType } from "../Constants";
+import { Piece } from "../models/Piece";
 import { tileIsEmptyOrOccupiedByOpponent } from "./GeneralRules";
 
 export const knightMove = (initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean => {
