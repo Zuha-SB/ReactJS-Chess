@@ -16,7 +16,6 @@ export default function Chessboard({updatePossibleMoves, playMove, pieces} : Pro
     const chessboardRef = useRef<HTMLDivElement>(null);
 
     function grabPiece(e: React.MouseEvent) {
-        updatePossibleMoves();
         const element = e.target as HTMLElement;
         const chessboard = chessboardRef.current;
         if(element.classList.contains("chess-piece") && chessboard) {

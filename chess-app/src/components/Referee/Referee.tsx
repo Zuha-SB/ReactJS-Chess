@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Piece, PieceType, Position, TeamType, initialBoardState, samePosition } from "../../Constants";
 import Chessboard from "../Chessboard/Chessboard";
 import { getPossiblePawnMoves, getPossibleKnightMoves, getPossibleBishopMoves, getPossibleRookMoves, getPossibleQueenMoves, getPossibleKingMoves, bishopMove, kingMove, knightMove, pawnMove, queenMove, rookMove } from "../../referee/rules";
@@ -8,6 +8,10 @@ export default function Referee() {
     const [pieces, setPieces] = useState<Piece[]>(initialBoardState);
     const [promotionPawn, setPromotionPawn] = useState<Piece>();
     const modalRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        updatePossibleMoves();
+    }, [])
 
     function updatePossibleMoves() {
         setPieces((currentPieces) => {
@@ -40,7 +44,7 @@ export default function Referee() {
                 }
                 return results;
             }, [] as Piece[])
-
+            updatePossibleMoves();
             setPieces(updatedPieces);
         } else if(validMove) {
             //Updates the piece position
@@ -67,7 +71,7 @@ export default function Referee() {
                 }
                 return results;
             }, [] as Piece[]);
-
+            updatePossibleMoves();
             setPieces(updatedPieces);
         } else {
             return false;
