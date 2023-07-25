@@ -22,6 +22,7 @@ export class Board {
         }
 
         this.checkKingMoves();
+        this.checkCurrentTeamMoves();
 
         // Remove possible moves for the team that is not playing
         for(const piece of this.pieces.filter(p => p.team !== this.currentTeam)) {
@@ -71,6 +72,37 @@ export class Board {
             if(!safe) {
                 //remove move from possiblemoves
                 king.possibleMoves = king.possibleMoves?.filter(m => !m.samePosition(move));
+            }
+        }
+    }
+
+    checkCurrentTeamMoves() {
+        // Loop through all the pieces for the current team
+        for(const piece of this.pieces.filter(p => p.team === this.currentTeam)) {
+            if(piece.possibleMoves === undefined) continue;
+            
+            // Simulate all piece moves
+            for(const move of piece.possibleMoves) {
+                const simulatedBoard = this.clone();
+
+                const clonedPiece = simulatedBoard.pieces.find(p => p.samePiecePosition(piece))!;
+                clonedPiece.position = move.clone();
+
+                const clonedKing = simulatedBoard.pieces.find(p => p.isKing && p.team === simulatedBoard.currentTeam)!;
+
+                for(const enemy of simulatedBoard.pieces.filter(p => p.team !== simulatedBoard.currentTeam)) {
+                    enemy.possibleMoves = simulatedBoard.getValidMoves(enemy, simulatedBoard.pieces);
+
+                    if(enemy.isPawn) {
+                        if(enemy.possibleMoves.some(m => m.x !== enemy.position.x && m.samePosition(clonedKing.position))) {
+                            piece.possibleMoves = piece.possibleMoves?.filter(m => !m.samePosition(move));
+                        }
+                    } else {
+                        if(enemy.possibleMoves.some(m => m.samePosition(clonedKing.position))) {
+                            piece.possibleMoves = piece.possibleMoves?.filter(m => !m.samePosition(move));
+                        }
+                    }
+                }
             }
         }
     }
