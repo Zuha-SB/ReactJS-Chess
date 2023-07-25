@@ -21,15 +21,28 @@ export class Board {
         const originalKingPosition = king.position.clone();
         // simulate king moves
         for(const move of king.possibleMoves) {
-            king.position = move;
+            const simulatedBoard = this.clone();
+            const pieceAtDestination =  simulatedBoard.pieces.find(p => p.samePosition(move));
+
+            if(pieceAtDestination !== undefined) {
+                 simulatedBoard.pieces =  simulatedBoard.pieces.filter(p => !p.samePosition(move));
+            }
+
+            const simulatedKing = simulatedBoard.pieces.find(p => p.isKing && p.team === TeamType.OPPONENT);
+            if(simulatedKing === undefined) continue;
+            simulatedKing.position = move;
+
+            for(const enemy of simulatedBoard.pieces.filter(p => p.team === TeamType.OUR)) {
+                enemy.possibleMoves = simulatedBoard.getValidMoves(enemy, simulatedBoard.pieces);
+            }
 
             let safe = true;
 
             // Determine if the move is safe
-            for(const p of this.pieces) {
+            for(const p of  simulatedBoard.pieces) {
                 if(p.team === TeamType.OPPONENT) continue;
                 if(p.isPawn) {
-                    const possiblePawnMoves = this.getValidMoves(p, this.pieces);
+                    const possiblePawnMoves =  simulatedBoard.getValidMoves(p,  simulatedBoard.pieces);
                     if(possiblePawnMoves?.some(ppm => ppm.x !== p.position.x && ppm.samePosition(move))) {
                         safe = false;
                     }
