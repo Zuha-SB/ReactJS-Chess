@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { initialBoard } from "../../Constants";
 import Chessboard from "../Chessboard/Chessboard";
-import { getPossiblePawnMoves, getPossibleKnightMoves, getPossibleBishopMoves, getPossibleRookMoves, getPossibleQueenMoves, getPossibleKingMoves, bishopMove, kingMove, knightMove, pawnMove, queenMove, rookMove } from "../../rules";
+import { bishopMove, kingMove, knightMove, pawnMove, queenMove, rookMove } from "../../rules";
 import { Piece, Position } from "../../models";
 import { TeamType, PieceType } from "../../Types";
 import { Pawn } from "../../models/Pawn";
@@ -14,12 +14,8 @@ export default function Referee() {
     const modalRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        updatePossibleMoves();
-    }, [])
-
-    function updatePossibleMoves() {
         board.calculateAllMoves();
-    }
+    }, [])
 
     function playMove(playedPiece: Piece, destination: Position): boolean {
         if(playedPiece.possibleMoves === undefined) return false;
