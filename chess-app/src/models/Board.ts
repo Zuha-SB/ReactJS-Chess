@@ -13,6 +13,37 @@ export class Board {
         for(const piece of this.pieces) {
             piece.possibleMoves = this.getValidMoves(piece, this.pieces);
         }
+
+        const king = this.pieces.find(p => p.isKing && p.team === TeamType.OPPONENT);
+
+        if(king?.possibleMoves === undefined) return;
+
+        const originalKingPosition = king.position.clone();
+        // simulate king moves
+        for(const move of king.possibleMoves) {
+            king.position = move;
+
+            let safe = true;
+
+            // Determine if the move is safe
+            for(const p of this.pieces) {
+                if(p.team === TeamType.OPPONENT) continue;
+                if(p.isPawn) {
+                    const possiblePawnMoves = this.getValidMoves(p, this.pieces);
+                    if(possiblePawnMoves?.some(ppm => ppm.x !== p.position.x && ppm.samePosition(move))) {
+                        safe = false;
+                    }
+                } else if(p.possibleMoves?.some(p => p.samePosition(move))) {
+                    safe = false;
+                }
+            }
+
+            if(!safe) {
+                //remove move from possiblemoves
+                king.possibleMoves = king.possibleMoves?.filter(m => !m.samePosition(move));
+            }
+        }
+        king.position = originalKingPosition;
     }
 
     getValidMoves(piece: Piece, boardState: Piece[]) : Position[] {
