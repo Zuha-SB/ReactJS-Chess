@@ -12,6 +12,10 @@ export class Board {
         this.totalTurns = totalTurns;
     }
 
+    get currentTeam() : TeamType {
+        return (this.totalTurns % 2 === 0) ? TeamType.OPPONENT : TeamType.OUR;
+    }
+
     calculateAllMoves() {
         for(const piece of this.pieces) {
             piece.possibleMoves = this.getValidMoves(piece, this.pieces);
@@ -21,7 +25,7 @@ export class Board {
     }
 
     checkKingMoves() {
-        const king = this.pieces.find(p => p.isKing && p.team === TeamType.OPPONENT);
+        const king = this.pieces.find(p => p.isKing && p.team === this.currentTeam);
 
         if(king?.possibleMoves === undefined) return;
 
@@ -34,11 +38,11 @@ export class Board {
                  simulatedBoard.pieces =  simulatedBoard.pieces.filter(p => !p.samePosition(move));
             }
 
-            const simulatedKing = simulatedBoard.pieces.find(p => p.isKing && p.team === TeamType.OPPONENT);
+            const simulatedKing = simulatedBoard.pieces.find(p => p.isKing && p.team === simulatedBoard.currentTeam);
             if(simulatedKing === undefined) continue;
             simulatedKing.position = move;
 
-            for(const enemy of simulatedBoard.pieces.filter(p => p.team === TeamType.OUR)) {
+            for(const enemy of simulatedBoard.pieces.filter(p => p.team !== simulatedBoard.currentTeam)) {
                 enemy.possibleMoves = simulatedBoard.getValidMoves(enemy, simulatedBoard.pieces);
             }
 
@@ -46,7 +50,7 @@ export class Board {
 
             // Determine if the move is safe
             for(const p of  simulatedBoard.pieces) {
-                if(p.team === TeamType.OPPONENT) continue;
+                if(p.team === simulatedBoard.currentTeam) continue;
                 if(p.isPawn) {
                     const possiblePawnMoves =  simulatedBoard.getValidMoves(p,  simulatedBoard.pieces);
                     if(possiblePawnMoves?.some(ppm => ppm.x !== p.position.x && ppm.samePosition(move))) {
