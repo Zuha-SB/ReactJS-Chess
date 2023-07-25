@@ -22,6 +22,11 @@ export class Board {
         }
 
         this.checkKingMoves();
+
+        // Remove possible moves for the team that is not playing
+        for(const piece of this.pieces.filter(p => p.team !== this.currentTeam)) {
+            piece.possibleMoves = [];
+        }
     }
 
     checkKingMoves() {
