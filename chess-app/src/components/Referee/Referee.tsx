@@ -37,7 +37,11 @@ export default function Referee() {
         let promotionRow = (playedPiece.team === TeamType.OUR) ? 7 : 0;
         if(destination.y === promotionRow && playedPiece.isPawn) {
             modalRef.current?.classList.remove("hidden");
-            setPromotionPawn(playedPiece);
+            setPromotionPawn((previousPromotionPawn) => {
+                const clonedPlayedPiece = playedPiece.clone();
+                clonedPlayedPiece.position = destination.clone();
+                return clonedPlayedPiece;
+            });
         }
         
         return playedMoveIsValid;
@@ -87,32 +91,19 @@ export default function Referee() {
             return;
         }
 
-        board.pieces = board.pieces.reduce((results, piece) => {
-            if(piece.samePiecePosition(promotionPawn)) {
-                piece.type = pieceType;
-                const teamType = (piece.team === TeamType.OUR) ? "w" : "b";
-                let image = "";
-                switch(pieceType) {
-                    case PieceType.KNIGHT:
-                        image = "knight";
-                        break;
-                    case PieceType.BISHOP:
-                        image = "bishop";
-                        break;
-                    case PieceType.ROOK:
-                        image = "rook";
-                        break;
-                    case PieceType.QUEEN:
-                        image = "queen";
-                        break;
+        setBoard((previousBoard) => {
+            const clonedBoard = board.clone();
+            clonedBoard.pieces = board.pieces.reduce((results, piece) => {
+                if(piece.samePiecePosition(promotionPawn)) {
+                    results.push(new Piece(piece.position.clone(), pieceType, piece.team));
+                } else {
+                    results.push(piece);
                 }
-                piece.image = `./chess-pieces/${image}_${teamType}.png`;
-            }
-            results.push(piece);
-
-            return results;
-        }, [] as Piece[])
-        updatePossibleMoves();
+                return results;
+            }, [] as Piece[])
+            clonedBoard.calculateAllMoves();
+            return clonedBoard;
+        })
         modalRef.current?.classList.add("hidden");
     }
 
