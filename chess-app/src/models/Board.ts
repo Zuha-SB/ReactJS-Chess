@@ -14,11 +14,14 @@ export class Board {
             piece.possibleMoves = this.getValidMoves(piece, this.pieces);
         }
 
+        this.checkKingMoves();
+    }
+
+    checkKingMoves() {
         const king = this.pieces.find(p => p.isKing && p.team === TeamType.OPPONENT);
 
         if(king?.possibleMoves === undefined) return;
 
-        const originalKingPosition = king.position.clone();
         // simulate king moves
         for(const move of king.possibleMoves) {
             const simulatedBoard = this.clone();
@@ -45,9 +48,11 @@ export class Board {
                     const possiblePawnMoves =  simulatedBoard.getValidMoves(p,  simulatedBoard.pieces);
                     if(possiblePawnMoves?.some(ppm => ppm.x !== p.position.x && ppm.samePosition(move))) {
                         safe = false;
+                        break;
                     }
                 } else if(p.possibleMoves?.some(p => p.samePosition(move))) {
                     safe = false;
+                    break;
                 }
             }
 
@@ -56,7 +61,6 @@ export class Board {
                 king.possibleMoves = king.possibleMoves?.filter(m => !m.samePosition(move));
             }
         }
-        king.position = originalKingPosition;
     }
 
     getValidMoves(piece: Piece, boardState: Piece[]) : Position[] {

@@ -21,11 +21,12 @@ export default function Referee() {
         board.calculateAllMoves();
     }
 
-    function playMove(playedPiece: Piece, destination: Position) {
+    function playMove(playedPiece: Piece, destination: Position): boolean {
+        if(playedPiece.possibleMoves === undefined) return false;
+        
         let playedMoveIsValid = false;
 
-        const validMove = isValidMove(playedPiece.position, destination, playedPiece.type, playedPiece.team);
-
+        const validMove = playedPiece.possibleMoves?.some(m => m.samePosition(destination));
         const enPassantMove = isEnPassantMove(playedPiece.position, destination, playedPiece.type, playedPiece.team);
 
         //playMove modifies the board thus we need to call setBoard
