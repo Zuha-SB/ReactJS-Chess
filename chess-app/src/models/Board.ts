@@ -85,6 +85,8 @@ export class Board {
             for(const move of piece.possibleMoves) {
                 const simulatedBoard = this.clone();
 
+                simulatedBoard.pieces = simulatedBoard.pieces.filter(p => !p.samePosition(move));
+
                 const clonedPiece = simulatedBoard.pieces.find(p => p.samePiecePosition(piece))!;
                 clonedPiece.position = move.clone();
 
