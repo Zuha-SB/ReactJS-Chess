@@ -95,7 +95,24 @@ export class Board {
 
     playMove(enPassantMove: boolean, validMove: boolean, playedPiece: Piece, destination: Position) : boolean {
         const pawnDirection = playedPiece.team === TeamType.OUR ? 1 : -1;
-        
+
+        // Castling
+        const destinationPiece = this.pieces.find(p => p.samePosition(destination));
+        if(playedPiece.isKing && destinationPiece?.isRook && destinationPiece.team === playedPiece.team) {
+            const direction = (destinationPiece.position.x - playedPiece.position.x > 0) ? 1 : -1;
+            const newKingXPosition = playedPiece.position.x + direction * 2;
+            this.pieces = this.pieces.map(p => {
+                if(p.samePiecePosition(playedPiece)) {
+                    p.position.x = newKingXPosition;
+                } else if(p.samePiecePosition(destinationPiece)) {
+                    p.position.x = newKingXPosition - direction;
+                }
+                return p;
+            });
+            this.calculateAllMoves();
+            return true;
+        }
+
         if(enPassantMove) {
             this.pieces = this.pieces.reduce((results, piece) => {
                 if(piece.samePiecePosition(playedPiece)) {
