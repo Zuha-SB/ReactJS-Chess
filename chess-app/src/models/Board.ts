@@ -1,6 +1,6 @@
 import { Piece, Position } from ".";
 import { PieceType, TeamType } from "../Types";
-import { getPossiblePawnMoves, getPossibleKnightMoves, getPossibleBishopMoves, getPossibleRookMoves, getPossibleQueenMoves, getPossibleKingMoves } from "../rules";
+import { getPossiblePawnMoves, getPossibleKnightMoves, getPossibleBishopMoves, getPossibleRookMoves, getPossibleQueenMoves, getPossibleKingMoves, getCastlingMoves } from "../rules";
 import { Pawn } from "./Pawn";
 
 export class Board {
@@ -19,6 +19,12 @@ export class Board {
     calculateAllMoves() {
         for(const piece of this.pieces) {
             piece.possibleMoves = this.getValidMoves(piece, this.pieces);
+        }
+
+        // Calculate castling moves
+        for(const king of this.pieces.filter(p => p.isKing)) {
+            if(king.possibleMoves === undefined) continue;
+            king.possibleMoves = [...king.possibleMoves, ...getCastlingMoves(king, this.pieces)];
         }
 
         // Check if the current team's moves are valid
@@ -98,6 +104,7 @@ export class Board {
                     }
                     piece.position.x = destination.x;
                     piece.position.y = destination.y;
+                    piece.hasMoved = true;
                     results.push(piece);
                 } else if(!(piece.samePosition(new Position(destination.x, destination.y - pawnDirection)))) {
                     if(piece.isPawn) {
@@ -121,7 +128,7 @@ export class Board {
                     }
                     piece.position.x = destination.x;
                     piece.position.y = destination.y;
-
+                    piece.hasMoved = true;
                     results.push(piece);
                 } else if(!(piece.samePosition(destination))) {
                     if(piece.isPawn) {
