@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { initialBoard } from "../../Constants";
 import Chessboard from "../Chessboard/Chessboard";
 import { bishopMove, kingMove, knightMove, pawnMove, queenMove, rookMove } from "../../rules";
