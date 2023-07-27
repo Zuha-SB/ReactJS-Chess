@@ -9,14 +9,10 @@ import { Board } from "../../models/Board";
 
 export default function Referee() {
 
-    const [board, setBoard] = useState<Board>(initialBoard);
+    const [board, setBoard] = useState<Board>(initialBoard.clone());
     const [promotionPawn, setPromotionPawn] = useState<Piece>();
     const modalRef = useRef<HTMLDivElement>(null);
     const checkmateModalRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        board.calculateAllMoves();
-    }, [])
 
     function playMove(playedPiece: Piece, destination: Position): boolean {
         if(playedPiece.possibleMoves === undefined) return false;
@@ -121,6 +117,11 @@ export default function Referee() {
         return (promotionPawn?.team === TeamType.OUR) ? "w" : "b";
     }
 
+    function restartGame() {
+        checkmateModalRef.current?.classList.add("hidden");
+        setBoard(initialBoard.clone());
+    }
+
     return (
     <>
         <p style={{color: "white", fontSize: "24px"}}>{board.totalTurns}</p>
@@ -136,7 +137,7 @@ export default function Referee() {
             <div className="modal-body">
                 <div className="checkmate-body">
                     <span>The winning team is {board.winningTeam === TeamType.OUR ? "white" : "black"}!</span>
-                    <button>Play again</button>
+                    <button onClick={restartGame}>Play again</button>
                 </div>
             </div>
         </div>
