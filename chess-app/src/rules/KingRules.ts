@@ -22,10 +22,10 @@ export const getPossibleKingMoves = (king: Piece, boardState: Piece[]) : Positio
             let passedPosition = new Position(king.position.x + i, king.position.y + j); // eventually rename passedPosition to destination
 
             // Check if move is outside board
-            if(passedPosition.x < 0 || passedPosition.x > 7 || passedPosition.y < 0 || passedPosition.y > 7) break;
-
-            if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, king.team)) {
-                possibleMoves.push(passedPosition);
+            if(!(passedPosition.x < 0 || passedPosition.x > 7 || passedPosition.y < 0 || passedPosition.y > 7)) {
+                if(tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, king.team)) {
+                    possibleMoves.push(passedPosition);
+                }
             }
         }
     }
