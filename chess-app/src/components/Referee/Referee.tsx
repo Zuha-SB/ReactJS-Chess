@@ -12,6 +12,7 @@ export default function Referee() {
     const [board, setBoard] = useState<Board>(initialBoard);
     const [promotionPawn, setPromotionPawn] = useState<Piece>();
     const modalRef = useRef<HTMLDivElement>(null);
+    const checkmateModalRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         board.calculateAllMoves();
@@ -120,12 +121,20 @@ export default function Referee() {
     return (
     <>
         <p style={{color: "white", fontSize: "24px"}}>{board.totalTurns}</p>
-        <div id="pawn-promotion-modal" className='hidden' ref={modalRef}>
+        <div className='modal hidden' ref={modalRef}>
             <div className='modal-body'>
                 <img onClick={() => promotePawn(PieceType.KNIGHT)} src={`./chess-pieces/knight_${promotionTeamType()}.png`}/>
                 <img onClick={() => promotePawn(PieceType.BISHOP)} src={`./chess-pieces/bishop_${promotionTeamType()}.png`}/>
                 <img onClick={() => promotePawn(PieceType.ROOK)} src={`./chess-pieces/rook_${promotionTeamType()}.png`}/>
                 <img onClick={() => promotePawn(PieceType.QUEEN)} src={`./chess-pieces/queen_${promotionTeamType()}.png`}/>
+            </div>
+        </div>
+        <div className="modal" ref={checkmateModalRef}>
+            <div className="modal-body">
+                <div className="checkmate-body">
+                    <span>The winning team is !</span>
+                    <button>Play again</button>
+                </div>
             </div>
         </div>
         <Chessboard playMove={playMove} pieces={board.pieces}/>
