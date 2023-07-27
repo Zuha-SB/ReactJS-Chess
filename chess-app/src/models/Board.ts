@@ -6,6 +6,7 @@ import { Pawn } from "./Pawn";
 export class Board {
     pieces: Piece[];
     totalTurns: number;
+    winningTeam?: TeamType;
 
     constructor(pieces: Piece[], totalTurns: number) {
         this.pieces = pieces;
@@ -34,6 +35,12 @@ export class Board {
         for(const piece of this.pieces.filter(p => p.team !== this.currentTeam)) {
             piece.possibleMoves = [];
         }
+
+        // Check if the playing team still has moves left
+        // If not, checkmate!
+        if(this.pieces.filter(p => p.team === this.currentTeam).some(
+            p => p.possibleMoves !== undefined && p.possibleMoves.length > 0)) return;
+        this.winningTeam = (this.currentTeam === TeamType.OUR) ? TeamType.OPPONENT : TeamType.OUR;
     }
 
     checkCurrentTeamMoves() {
